@@ -9,6 +9,7 @@ from duckduckgo_search import DDGS  # pip install duckduckgo-search
 from huggingface_hub import hf_hub_download
 from transformers import ViTForImageClassification
 import os
+import time   # ✅ 추가 (rate limit 완화용)
 
 # ---------------------------
 # 제목 & 안내
@@ -39,11 +40,12 @@ def load_model():
     repo_id = "eNtangedAI/my_foodie_classifier_demo"   # 정확한 Hugging Face repo 이름
     filename = "vit_best.pth"                           # Hub에 올라간 weight 파일명
 
-    #Streamlit Secret에서 HF_TOKEN 가져오기
+    # Streamlit Secret에서 HF_TOKEN 가져오기
     token = os.getenv("HF_TOKEN")
+
     # Hub에서 다운로드
     try:
-        weight_path = hf_hub_download(repo_id=repo_id, filename=filename)
+        weight_path = hf_hub_download(repo_id=repo_id, filename=filename, token=token)
     except Exception as e:
         st.error(f"❌ Hugging Face Hub에서 모델 다운로드 실패: {e}")
         st.stop()
@@ -81,9 +83,13 @@ with tab1:
 with tab2:
     query = st.text_input("검색할 음식 이름을 입력하세요 (예: ramen, pizza)")
     if query:
+        urls = []
         with DDGS() as ddgs:
-            results = [r for r in ddgs.images(query, max_results=4)]
-        urls = [r["image"] for r in results]
+            # ✅ Rate Limit 회피 (max_results 줄이고 sleep 추가)
+            for r in ddgs.images(query, max_results=3):
+                urls.append(r["image"])
+                time.sleep(2)  # 요청 간격 딜레이 (rate limit 완화)
+
         if urls:
             st.write("🔎 검색된 이미지 (클릭하여 선택):")
             cols = st.columns(len(urls))
