@@ -1,10 +1,11 @@
+huggingface_hub>=0.23.0
 streamlit==1.45.1
 torch>=2.2.0
 torchvision>=0.17.0
 transformers>=4.55.0
-huggingface_hub>=0.23.0
 Pillow>=10.0.0
 requests>=2.32.0
 duckduckgo-search>=6.1.0
+
 
 
