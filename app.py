@@ -39,7 +39,7 @@ def load_model():
     filename = "vit_best.pth"                           # Hub에 올라간 weight 파일명
 
     # Hub에서 다운로드
-   try:
+    try:
         weight_path = hf_hub_download(repo_id=repo_id, filename=filename)
     except Exception as e:
         st.error(f"❌ Hugging Face Hub에서 모델 다운로드 실패: {e}")
