@@ -53,10 +53,21 @@ st.markdown("""
     }
     .warning-box {
         background: linear-gradient(135deg, #FFF8DC 0%, #F5F5DC 100%);
-        padding: 1rem;
+        padding: 1.5rem;
         border-radius: 10px;
         border-left: 4px solid #FFD700;
         margin: 1rem 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .warning-box strong {
+        color: #8B4513 !important;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+    .warning-box span {
+        color: #555 !important;
+        font-size: 0.9rem !important;
+        line-height: 1.4;
     }
     .result-success {
         background: linear-gradient(135deg, #E8F5E8 0%, #F0FFF0 100%);
@@ -93,11 +104,17 @@ st.markdown('<div class="main-title">🍱 음식 이미지 분류기<br><small s
 
 st.markdown("""
 <div class="warning-box">
-    <strong>⚠️ 데모 버전 안내</strong><br>
-    업로드한 이미지를 분류하여 음식 이름과 정보를 카드 형태로 보여줍니다.<br>
-    모델 가중치는 Hugging Face Hub에서 자동으로 다운로드됩니다.
+    <strong style="color: #8B4513;">⚠️ 데모 버전 안내</strong><br>
+    <span style="color: #555; font-size: 0.9rem;">업로드한 이미지를 분류하여 음식 이름과 정보를 카드 형태로 보여줍니다.<br>
+    모델 가중치는 Hugging Face Hub에서 자동으로 다운로드됩니다.</span>
 </div>
 """, unsafe_allow_html=True)
+
+# ---------------------------
+# 파일 업로드 (50가지 음식 리스트보다 먼저 배치)
+# ---------------------------
+st.markdown("### 📸 이미지 업로드")
+uploaded_file = st.file_uploader("음식 이미지를 업로드해주세요! 🤗", type=["jpg", "png", "jpeg"])
 
 # ---------------------------
 # 50가지 음식 리스트 표시
@@ -181,11 +198,7 @@ transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
-# ---------------------------
-# 파일 업로드
-# ---------------------------
-st.markdown("### 📸 이미지 업로드")
-uploaded_file = st.file_uploader("음식 이미지를 업로드해주세요! 🤗", type=["jpg", "png", "jpeg"])
+
 
 # ---------------------------
 # 추론 실행
