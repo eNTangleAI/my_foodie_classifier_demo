@@ -7,6 +7,7 @@ import requests
 from io import BytesIO
 from duckduckgo_search import DDGS  # pip install duckduckgo-search
 from huggingface_hub import hf_hub_download
+from transformers import ViTForImageClassification
 
 # ---------------------------
 # 제목 & 안내
@@ -34,22 +35,20 @@ classes = list(food_info.keys())
 # ---------------------------
 @st.cache_resource
 def load_model():
-    # HF Repo 정보
-    repo_id = "eNtangedAI/my_foodie_classifier_demo"  # 네가 올린 repo 이름
-    filename = "vit_best.pth"  # Hub에 올라간 weight 파일명
+    repo_id = "eNtangledAI/my_foodie_classifier_demo"   # 정확한 Hugging Face repo 이름
+    filename = "vit_best.pth"                           # Hub에 올라간 weight 파일명
 
-    # Hub에서 다운로드 (처음 실행 시만 다운로드, 이후 캐시 사용)
-    try:
-        weight_path = hf_hub_download(repo_id=repo_id, filename=filename)
-    except Exception as e:
-        st.error(f"❌ Hugging Face Hub에서 모델 다운로드 실패: {e}")
-        st.stop()
+    # Hub에서 다운로드
+    weight_path = hf_hub_download(repo_id=repo_id, filename=filename)
 
-    # ViT-B16 모델 구조 불러오기
-    model = torch.hub.load('huggingface/pytorch-transformers', 'vit_b16', pretrained=False)
-    model.head = torch.nn.Linear(model.head.in_features, len(classes))
+    # ViT 모델 구조 정의
+    model = ViTForImageClassification.from_pretrained(
+        "google/vit-base-patch16-224",
+        num_labels=len(classes),
+        ignore_mismatched_sizes=True
+    )
 
-    # 가중치 로드
+    # 학습된 가중치 불러오기
     model.load_state_dict(torch.load(weight_path, map_location="cpu"))
     model.eval()
     return model
@@ -109,7 +108,8 @@ if input_img is not None:
     x = transform(input_img).unsqueeze(0)
 
     with torch.no_grad():
-        pred = model(x).argmax(1).item()
+        outputs = model(x).logits
+        pred = outputs.argmax(1).item()
 
     result = classes[pred]
     st.success(f"예측 결과: **{result}**")
