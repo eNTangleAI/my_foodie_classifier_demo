@@ -8,6 +8,7 @@ from io import BytesIO
 from duckduckgo_search import DDGS  # pip install duckduckgo-search
 from huggingface_hub import hf_hub_download
 from transformers import ViTForImageClassification
+import os
 
 # ---------------------------
 # 제목 & 안내
