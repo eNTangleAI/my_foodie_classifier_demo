@@ -16,14 +16,6 @@ st.set_page_config(
     layout="centered"
 )
 
-# 페이지 설정 및 스타일링
-# ---------------------------
-st.set_page_config(
-    page_title="음식 이미지 분류기",
-    page_icon="🍱",
-    layout="centered"
-)
-
 # CSS 스타일링
 st.markdown("""
 <style>
@@ -260,8 +252,6 @@ transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
-
-
 # ---------------------------
 # 추론 실행
 # ---------------------------
@@ -291,7 +281,7 @@ if uploaded_file is not None:
     if info:
         st.markdown("""
         <div class="food-card">
-            <h4 style="color: #8A2BE2; margin-bottom: 1rem;">🍽️ 음식 정보 카드</h4>
+            <h4 style="color: #8A7CA8; margin-bottom: 1rem;">🍽️ 음식 정보 카드</h4>
         """, unsafe_allow_html=True)
         
         st.markdown(f"""
