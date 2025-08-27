@@ -36,7 +36,7 @@ classes = list(food_info.keys())
 # ---------------------------
 @st.cache_resource
 def load_model():
-    repo_id = "eNtangledAI/my_foodie_classifier_demo"   # 정확한 Hugging Face repo 이름
+    repo_id = "eNtangedAI/my_foodie_classifier_demo"   # 정확한 Hugging Face repo 이름
     filename = "vit_best.pth"                           # Hub에 올라간 weight 파일명
 
     #Streamlit Secret에서 HF_TOKEN 가져오기
