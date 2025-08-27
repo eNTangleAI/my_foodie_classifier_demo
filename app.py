@@ -35,7 +35,7 @@ classes = list(food_info.keys())
 @st.cache_resource
 def load_model():
     # HF Repo 정보
-    repo_id = "eNtangledAI/my_foodie_classifier_demo"  # 네가 올린 repo 이름
+    repo_id = "eNtangedAI/my_foodie_classifier_demo"  # 네가 올린 repo 이름
     filename = "vit_best.pth"  # Hub에 올라간 weight 파일명
 
     # Hub에서 다운로드 (처음 실행 시만 다운로드, 이후 캐시 사용)
