@@ -16,38 +16,50 @@ st.set_page_config(
     layout="centered"
 )
 
+# 페이지 설정 및 스타일링
+# ---------------------------
+st.set_page_config(
+    page_title="음식 이미지 분류기",
+    page_icon="🍱",
+    layout="centered"
+)
+
 # CSS 스타일링
 st.markdown("""
 <style>
+    /* 전체 배경 */
+    .stApp {
+        background: #FEFEFE;
+    }
     .main-title {
         font-size: 2.2rem;
-        color: #FF6B6B;
+        color: #9B7EBD;
         text-align: center;
         margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
     .subtitle {
         font-size: 1.1rem;
-        color: #4ECDC4;
+        color: #8A7CA8;
         text-align: center;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
         margin-top: 2rem;
     }
     .upload-title {
         font-size: 1.1rem;
-        color: #4ECDC4;
+        color: #8A7CA8;
         text-align: center;
         margin-bottom: 1rem;
         margin-top: 2rem;
         font-weight: normal;
     }
     .food-grid {
-        background: linear-gradient(135deg, #FFF5F5 0%, #F0F8FF 100%);
+        background: linear-gradient(135deg, #FAFAFA 0%, #F8F8F8 100%);
         padding: 1.5rem;
         border-radius: 15px;
-        border: 2px solid #FFE4E1;
-        margin: 1rem 0 2rem 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border: 1px solid #E8E8E8;
+        margin: 0.5rem 0 2rem 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     .food-item {
         display: inline-block;
@@ -55,18 +67,18 @@ st.markdown("""
         padding: 4px 8px;
         background: #FFFFFF;
         border-radius: 12px;
-        border: 1px solid #FFB6C1;
+        border: 1px solid #E0E0E0;
         font-size: 0.85rem;
         color: #666;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .warning-box {
-        background: linear-gradient(135deg, #FFF8DC 0%, #F5F5DC 100%);
+        background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
         padding: 1.5rem;
         border-radius: 15px;
-        border: 2px solid #FFE4B5;
+        border: 1px solid #E8E8E8;
         margin: 1rem 0 2rem 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     .warning-box strong {
         color: #8B4513 !important;
@@ -79,33 +91,33 @@ st.markdown("""
         line-height: 1.4;
     }
     .result-success {
-        background: linear-gradient(135deg, #E8F5E8 0%, #F0FFF0 100%);
+        background: linear-gradient(135deg, #F0F8F0 0%, #FAFAFA 100%);
         padding: 1rem;
         border-radius: 15px;
-        border: 2px solid #98FB98;
+        border: 1px solid #D0E0D0;
         text-align: center;
         font-size: 1.2rem;
         font-weight: bold;
-        color: #228B22;
+        color: #4A7C59;
         margin: 1rem 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     .food-card {
-        background: linear-gradient(135deg, #FFF0F5 0%, #F8F8FF 100%);
+        background: linear-gradient(135deg, #FAFAFA 0%, #F8F8F8 100%);
         padding: 1.5rem;
         border-radius: 15px;
-        border: 2px solid #DDA0DD;
+        border: 1px solid #E8E8E8;
         margin: 1rem 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     /* 파일 업로더 스타일링 */
     .stFileUploader > div {
-        background: linear-gradient(135deg, #F0F8FF 0%, #E6E6FA 100%);
-        border: 2px solid #B0C4DE;
+        background: #FFFFFF;
+        border: 1px solid #E0E0E0;
         border-radius: 15px;
         padding: 2rem;
         margin: 1rem 0 2rem 0;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         text-align: center;
     }
     .stFileUploader > div > div {
@@ -121,20 +133,20 @@ st.markdown("""
     }
     /* Browse files 버튼 스타일링 */
     .stFileUploader button {
-        background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%) !important;
+        background: #FFFFFF !important;
         color: #666 !important;
-        border: 2px solid #FFB6C1 !important;
-        border-radius: 25px !important;
+        border: 1px solid #D0D0D0 !important;
+        border-radius: 20px !important;
         padding: 0.5rem 1.5rem !important;
         font-size: 0.9rem !important;
         font-weight: 500 !important;
-        box-shadow: 0 2px 8px rgba(255, 182, 193, 0.3) !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
         transition: all 0.3s ease !important;
     }
     .stFileUploader button:hover {
-        background: linear-gradient(135deg, #FECFEF 0%, #FF9A9E 100%) !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 4px 12px rgba(255, 182, 193, 0.4) !important;
+        background: #F5F5F5 !important;
+        border: 1px solid #C0C0C0 !important;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.15) !important;
     }
     /* 드래그 앤 드롭 텍스트 */
     .stFileUploader > div::before {
@@ -156,15 +168,14 @@ st.markdown('<div class="main-title">🍱 음식 이미지 분류기<br><small s
 st.markdown("""
 <div class="warning-box">
     <strong style="color: #8B4513;">⚠️ 데모 버전 안내</strong><br>
-    <span style="color: #555; font-size: 0.9rem;">업로드한 이미지를 분류하여 음식 이름과 정보를 카드 형태로 보여줍니다.<br>
-    모델 가중치는 Hugging Face Hub에서 자동으로 다운로드됩니다.</span>
+    <span style="color: #555; font-size: 0.9rem;">이 앱은 인공지능을 활용한 음식 이미지 분류기입니다. 음식 사진을 업로드하면 ViT(Vision Transformer) 모델이 자동으로 음식의 종류를 식별하고, 해당 음식에 대한 상세 정보(칼로리, 영양소, 추천 페어링, 음악, 영화 등)를 카드 형태로 제공합니다. 휴대폰으로 찍은 음식 사진이나 인터넷에서 다운받은 이미지 모두 사용 가능하며, 총 50가지 다양한 음식을 정확하게 분류할 수 있습니다.</span>
 </div>
 """, unsafe_allow_html=True)
 
 # ---------------------------
 # 50가지 음식 리스트 표시
 # ---------------------------
-st.markdown('<div class="subtitle">🎯 분류 가능한 50가지 음식</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">분류 가능한 50가지 음식</div>', unsafe_allow_html=True)
 
 # 음식 이모지 매핑
 food_emojis = {
