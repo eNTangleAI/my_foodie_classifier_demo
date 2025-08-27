@@ -39,8 +39,12 @@ def load_model():
     filename = "vit_best.pth"                           # Hub에 올라간 weight 파일명
 
     # Hub에서 다운로드
-    weight_path = hf_hub_download(repo_id=repo_id, filename=filename)
-
+   try:
+        weight_path = hf_hub_download(repo_id=repo_id, filename=filename)
+    except Exception as e:
+        st.error(f"❌ Hugging Face Hub에서 모델 다운로드 실패: {e}")
+        st.stop()
+        
     # ViT 모델 구조 정의
     model = ViTForImageClassification.from_pretrained(
         "google/vit-base-patch16-224",
