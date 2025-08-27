@@ -30,14 +30,23 @@ st.markdown("""
         font-size: 1.1rem;
         color: #4ECDC4;
         text-align: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
+        margin-top: 2rem;
+    }
+    .upload-title {
+        font-size: 1.1rem;
+        color: #4ECDC4;
+        text-align: center;
+        margin-bottom: 1rem;
+        margin-top: 2rem;
+        font-weight: normal;
     }
     .food-grid {
         background: linear-gradient(135deg, #FFF5F5 0%, #F0F8FF 100%);
         padding: 1.5rem;
         border-radius: 15px;
         border: 2px solid #FFE4E1;
-        margin: 1rem 0;
+        margin: 1rem 0 2rem 0;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     .food-item {
@@ -54,10 +63,10 @@ st.markdown("""
     .warning-box {
         background: linear-gradient(135deg, #FFF8DC 0%, #F5F5DC 100%);
         padding: 1.5rem;
-        border-radius: 10px;
-        border-left: 4px solid #FFD700;
-        margin: 1rem 0;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-radius: 15px;
+        border: 2px solid #FFE4B5;
+        margin: 1rem 0 2rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     .warning-box strong {
         color: #8B4513 !important;
@@ -72,13 +81,14 @@ st.markdown("""
     .result-success {
         background: linear-gradient(135deg, #E8F5E8 0%, #F0FFF0 100%);
         padding: 1rem;
-        border-radius: 10px;
-        border-left: 4px solid #32CD32;
+        border-radius: 15px;
+        border: 2px solid #98FB98;
         text-align: center;
         font-size: 1.2rem;
         font-weight: bold;
         color: #228B22;
         margin: 1rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     .food-card {
         background: linear-gradient(135deg, #FFF0F5 0%, #F8F8FF 100%);
@@ -88,11 +98,52 @@ st.markdown("""
         margin: 1rem 0;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    .stFileUploader > div > div > div {
+    /* 파일 업로더 스타일링 */
+    .stFileUploader > div {
         background: linear-gradient(135deg, #F0F8FF 0%, #E6E6FA 100%);
-        border: 2px dashed #9370DB;
+        border: 2px solid #B0C4DE;
         border-radius: 15px;
         padding: 2rem;
+        margin: 1rem 0 2rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    .stFileUploader > div > div {
+        border: none !important;
+        background: transparent !important;
+    }
+    .stFileUploader > div > div > div {
+        color: #666 !important;
+        font-size: 1rem !important;
+    }
+    .stFileUploader label {
+        display: none !important;
+    }
+    /* Browse files 버튼 스타일링 */
+    .stFileUploader button {
+        background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%) !important;
+        color: #666 !important;
+        border: 2px solid #FFB6C1 !important;
+        border-radius: 25px !important;
+        padding: 0.5rem 1.5rem !important;
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
+        box-shadow: 0 2px 8px rgba(255, 182, 193, 0.3) !important;
+        transition: all 0.3s ease !important;
+    }
+    .stFileUploader button:hover {
+        background: linear-gradient(135deg, #FECFEF 0%, #FF9A9E 100%) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 12px rgba(255, 182, 193, 0.4) !important;
+    }
+    /* 드래그 앤 드롭 텍스트 */
+    .stFileUploader > div::before {
+        content: "🍽️ 음식 이미지를 업로드하거나 드래그해주세요! 🤗";
+        display: block;
+        margin-bottom: 1rem;
+        color: #666;
+        font-size: 1rem;
+        font-weight: 500;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -109,12 +160,6 @@ st.markdown("""
     모델 가중치는 Hugging Face Hub에서 자동으로 다운로드됩니다.</span>
 </div>
 """, unsafe_allow_html=True)
-
-# ---------------------------
-# 파일 업로드 (50가지 음식 리스트보다 먼저 배치)
-# ---------------------------
-st.markdown("### 📸 이미지 업로드")
-uploaded_file = st.file_uploader("음식 이미지를 업로드해주세요! 🤗", type=["jpg", "png", "jpeg"])
 
 # ---------------------------
 # 50가지 음식 리스트 표시
@@ -157,6 +202,12 @@ for food in foods:
 
 food_list_html += '</div>'
 st.markdown(food_list_html, unsafe_allow_html=True)
+
+# ---------------------------
+# 파일 업로드
+# ---------------------------
+st.markdown('<div class="upload-title">📸 이미지 업로드</div>', unsafe_allow_html=True)
+uploaded_file = st.file_uploader("", type=["jpg", "png", "jpeg"], label_visibility="collapsed")
 
 # ---------------------------
 # JSON 불러오기
