@@ -38,6 +38,8 @@ def load_model():
     repo_id = "eNtangledAI/my_foodie_classifier_demo"   # 정확한 Hugging Face repo 이름
     filename = "vit_best.pth"                           # Hub에 올라간 weight 파일명
 
+    #Streamlit Secret에서 HF_TOKEN 가져오기
+    token = os.getenv("HF_TOKEN")
     # Hub에서 다운로드
     try:
         weight_path = hf_hub_download(repo_id=repo_id, filename=filename)
