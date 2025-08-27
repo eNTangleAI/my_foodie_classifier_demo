@@ -3,23 +3,18 @@ from PIL import Image
 import torch
 from torchvision import transforms
 import json
-import requests
-from io import BytesIO
-from duckduckgo_search import DDGS  # pip install duckduckgo-search
 from huggingface_hub import hf_hub_download
 from transformers import ViTForImageClassification
 import os
-import time   # ✅ 추가 (rate limit 완화용)
 
 # ---------------------------
 # 제목 & 안내
 # ---------------------------
-st.title("🍱 음식 이미지 분류기 (ViT-B16 Demo + 검색 지원)")
+st.title("🍱 음식 이미지 분류기 (ViT-B16 Demo)")
 
 st.markdown("""
 ⚠️ **데모 버전 안내**  
-- 업로드한 이미지를 분류하거나,  
-- 음식 이름을 검색해서 나온 이미지를 선택할 수 있습니다.  
+- 업로드한 이미지를 분류하여 음식 이름과 정보를 카드 형태로 보여줍니다.  
 
 모델 가중치는 Hugging Face Hub에서 자동으로 다운로드됩니다.
 """)
@@ -38,7 +33,7 @@ classes = list(food_info.keys())
 @st.cache_resource
 def load_model():
     repo_id = "eNtangedAI/my_foodie_classifier_demo"   # 정확한 Hugging Face repo 이름
-    filename = "vit_best.pth"                           # Hub에 올라간 weight 파일명
+    filename = "vit_best.pth"                          # Hub에 올라간 weight 파일명
 
     # Streamlit Secret에서 HF_TOKEN 가져오기
     token = os.getenv("HF_TOKEN")
@@ -70,54 +65,17 @@ transform = transforms.Compose([
 ])
 
 # ---------------------------
-# 파일 업로드 or 검색
+# 파일 업로드
 # ---------------------------
-tab1, tab2 = st.tabs(["📂 파일 업로드", "🔍 음식 검색"])
-
-uploaded_file = None
-selected_image = None
-
-with tab1:
-    uploaded_file = st.file_uploader("이미지를 업로드하세요", type=["jpg", "png", "jpeg"])
-
-with tab2:
-    query = st.text_input("검색할 음식 이름을 입력하세요 (예: ramen, pizza)")
-    if query:
-        urls = []
-        with DDGS() as ddgs:
-            # ✅ Rate Limit 회피 (max_results 줄이고 sleep 추가)
-            for r in ddgs.images(query, max_results=3):
-                urls.append(r["image"])
-                time.sleep(2)  # 요청 간격 딜레이 (rate limit 완화)
-
-        if urls:
-            st.write("🔎 검색된 이미지 (클릭하여 선택):")
-            cols = st.columns(len(urls))
-            for i, url in enumerate(urls):
-                try:
-                    response = requests.get(url, timeout=5)
-                    img = Image.open(BytesIO(response.content)).convert("RGB")
-                    with cols[i]:
-                        if st.button(f"선택 {i+1}"):
-                            selected_image = img
-                        st.image(img, use_container_width=True)
-                except:
-                    continue
-
-# ---------------------------
-# 입력 이미지 결정
-# ---------------------------
-input_img = None
-if uploaded_file is not None:
-    input_img = Image.open(uploaded_file).convert("RGB")
-elif selected_image is not None:
-    input_img = selected_image
+uploaded_file = st.file_uploader("이미지를 업로드하세요", type=["jpg", "png", "jpeg"])
 
 # ---------------------------
 # 추론 실행
 # ---------------------------
-if input_img is not None:
-    st.image(input_img, caption="선택된 이미지", use_container_width=True)
+if uploaded_file is not None:
+    input_img = Image.open(uploaded_file).convert("RGB")
+    st.image(input_img, caption="업로드된 이미지", use_container_width=True)
+
     x = transform(input_img).unsqueeze(0)
 
     with torch.no_grad():
