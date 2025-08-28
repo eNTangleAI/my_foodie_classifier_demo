@@ -17,7 +17,7 @@ st.set_page_config(
 )
 
 # ---------------------------
-# Neumorphism CSS (업로더 통합)
+# Neumorphism CSS
 # ---------------------------
 st.markdown("""
 <style>
@@ -59,28 +59,19 @@ st.markdown("""
     color: #555;
 }
 
-/* ---------------------------
-   파일 업로더 Neumorphism 스타일
---------------------------- */
-div[data-testid="stFileUploaderDropzone"] {
+/* 업로더 */
+.stFileUploader > div {
     background: #ECECEC !important;
     border-radius: 20px !important;
-    border: none !important;
     padding: 2rem !important;
+    margin: 1rem 0 2rem 0 !important;
+    text-align: center !important;
     box-shadow: inset 6px 6px 12px #c5c5c5,
                 inset -6px -6px 12px #ffffff !important;
-    color: #333 !important;
-}
-div[data-testid="stFileUploaderDropzone"] label {
-    color: #333 !important;
-}
-div[data-testid="stFileUploaderDropzone"] p {
-    color: #555 !important;
-    font-size: 0.9rem !important;
 }
 
 /* 업로더 버튼 */
-div[data-testid="stFileUploaderDropzone"] button {
+.stFileUploader button {
     background: #ECECEC !important;
     color: #333 !important;
     border-radius: 12px !important;
@@ -89,9 +80,8 @@ div[data-testid="stFileUploaderDropzone"] button {
     font-weight: 500 !important;
     box-shadow: 6px 6px 12px #c5c5c5,
                 -6px -6px 12px #ffffff !important;
-    transition: all 0.2s ease-in-out;
 }
-div[data-testid="stFileUploaderDropzone"] button:hover {
+.stFileUploader button:hover {
     box-shadow: inset 6px 6px 12px #c5c5c5,
                 inset -6px -6px 12px #ffffff !important;
 }
@@ -166,7 +156,8 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 3) 업로더
-uploaded_file = st.file_uploader("📸 이미지 업로드", type=["jpg","png","jpeg"])
+st.markdown('<div class="upload-title">📸 이미지 업로드</div>', unsafe_allow_html=True)
+uploaded_file = st.file_uploader("", type=["jpg","png","jpeg"], label_visibility="collapsed")
 
 # ---------------------------
 # JSON 불러오기
@@ -218,7 +209,7 @@ food_emojis = {
 }
 
 # ---------------------------
-# 업로드된 이미지 + 추론 결과
+# 업로드된 이미지 + 추론 결과 (업로더 바로 밑)
 # ---------------------------
 if uploaded_file is not None:
     input_img = Image.open(uploaded_file).convert("RGB")
@@ -257,7 +248,7 @@ if uploaded_file is not None:
         st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------------------------
-# 음식 목록 (마지막)
+# 4) 음식 목록 (마지막)
 # ---------------------------
 st.markdown('<div class="subtitle">🍣 분류 가능한 50가지 음식</div>', unsafe_allow_html=True)
 
