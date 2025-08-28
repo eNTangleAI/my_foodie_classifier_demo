@@ -17,176 +17,221 @@ st.set_page_config(
 )
 
 # ---------------------------
-# Glassmorphism CSS
+# 개선된 네오모피즘 CSS 스타일링
 # ---------------------------
 st.markdown("""
 <style>
-/* 전체 배경 (컬러풀 그라데이션) */
+/* 전체 배경 */
 .stApp {
-    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 30%, #fad0c4 70%, #fbc2eb 100%);
-    color: #fff;
+    background: linear-gradient(135deg, #f0f0f3 0%, #e8e8ec 100%);
+    color: #333;
     font-family: 'Segoe UI', sans-serif;
-    position: relative;
-    overflow: hidden;
 }
 
-/* 블러 원형 장식 */
-.stApp::before {
-    content: "";
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    top: -100px;
-    left: -100px;
-    background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 70%);
-    filter: blur(100px);
-    border-radius: 50%;
-}
-.stApp::after {
-    content: "";
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    bottom: -150px;
-    right: -150px;
-    background: radial-gradient(circle, rgba(255,255,255,0.3), transparent 70%);
-    filter: blur(120px);
-    border-radius: 50%;
-}
-
-/* Glassmorphism 카드 */
-.glass-card {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.1);
-    padding: 1.5rem;
-    margin: 1rem 0;
-}
-
-/* 제목 */
+/* 메인 타이틀 */
 .main-title {
-    font-size: 2.5rem;
-    color: #fff;
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #9B7EBD, #B89DDB);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-align: center;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
 }
 
-/* 경고 박스 */
+/* 서브 타이틀 */
+.subtitle, .upload-title {
+    font-size: 1.1rem;
+    color: #8A7CA8;
+    text-align: center;
+    margin: 1.5rem 0 1rem 0;
+}
+
+/* 경고 안내 박스 - 볼록한 효과 */
 .warning-box {
-    color: #fff;
-    font-size: 1rem;
+    background: linear-gradient(145deg, #f5f5f8, #e6e6ea);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin: 1rem 0 2rem 0;
+    font-size: 0.9rem;
+    color: #444;
+    box-shadow: 12px 12px 24px rgba(181, 181, 181, 0.4),
+                -12px -12px 24px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.warning-box strong {
+    color: #8B4513;
+    font-weight: bold;
 }
 
-/* 업로더 */
+/* 파일 업로더 - 볼록한 효과 + 컬러 */
 .stFileUploader > div {
-    background: rgba(255,255,255,0.2) !important;
-    border-radius: 20px !important;
-    border: 1px dashed rgba(255,255,255,0.4) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    padding: 2rem !important;
+    background: linear-gradient(145deg, #f2f2f5, #e8e8ec) !important;
+    border-radius: 25px !important;
+    padding: 2.5rem !important;
     margin: 1rem 0 2rem 0 !important;
     text-align: center !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1) !important;
+    box-shadow: 15px 15px 30px rgba(163, 163, 163, 0.3),
+                -15px -15px 30px rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    transition: all 0.4s ease !important;
 }
 
-/* 버튼 */
+/* 드래그 오버 상태 - 은은한 컬러 추가 */
+.stFileUploader > div:hover {
+    background: linear-gradient(145deg, 
+                rgba(155, 126, 189, 0.08), 
+                rgba(184, 157, 219, 0.05)) !important;
+    transform: translateY(-2px) scale(1.01) !important;
+    box-shadow: 18px 18px 35px rgba(155, 126, 189, 0.2),
+                -18px -18px 35px rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(155, 126, 189, 0.2) !important;
+}
+
+/* 업로더 버튼 - 볼록한 효과 */
 .stFileUploader button {
-    background: rgba(255,255,255,0.2) !important;
-    color: #fff !important;
-    border: 1px solid rgba(255,255,255,0.4) !important;
+    background: linear-gradient(145deg, #f0f0f3, #e3e3e7) !important;
     border-radius: 20px !important;
-    padding: 0.6rem 1.5rem !important;
-    backdrop-filter: blur(8px) !important;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.15) !important;
-    transition: all 0.2s ease-in-out;
+    padding: 0.7rem 1.8rem !important;
+    color: #555 !important;
+    border: none !important;
+    box-shadow: 8px 8px 16px rgba(163, 163, 163, 0.3),
+                -8px -8px 16px rgba(255, 255, 255, 0.8) !important;
+    transition: all 0.3s ease !important;
+    font-weight: 500 !important;
 }
 .stFileUploader button:hover {
-    background: rgba(255,255,255,0.3) !important;
-    transform: translateY(-2px);
+    transform: translateY(-1px) !important;
+    box-shadow: 10px 10px 20px rgba(163, 163, 163, 0.4),
+                -10px -10px 20px rgba(255, 255, 255, 0.9) !important;
+    background: linear-gradient(145deg, #f2f2f5, #e5e5e9) !important;
 }
 
-/* 음식 목록 */
-.food-grid {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    padding: 1.5rem;
-    margin: 1rem 0;
-    text-align: center;
+/* 업로더 안내 텍스트 */
+.stFileUploader > div::before {
+    content: "🍽️ 음식 이미지를 업로드하거나 드래그해주세요! 🤗";
+    display: block;
+    margin-bottom: 1rem;
+    color: #666;
+    font-size: 1rem;
+    font-weight: 500;
 }
+
+/* 음식 목록 박스 - 볼록한 효과 + 은은한 컬러 */
+.food-grid {
+    background: linear-gradient(145deg, #f3f3f6, #e7e7eb);
+    border-radius: 25px;
+    padding: 2rem;
+    margin: 0.5rem 0 2rem 0;
+    text-align: center;
+    box-shadow: 15px 15px 30px rgba(163, 163, 163, 0.3),
+                -15px -15px 30px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .food-item {
     display: inline-block;
     margin: 6px;
     padding: 8px 14px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.25);
-    border: 1px solid rgba(255,255,255,0.4);
-    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    background: linear-gradient(145deg, #f0f0f3, #e4e4e8);
+    box-shadow: 6px 6px 12px rgba(163, 163, 163, 0.25),
+                -6px -6px 12px rgba(255, 255, 255, 0.8);
     font-size: 0.9rem;
-    color: #fff;
+    color: #555;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-/* 결과 카드 */
+.food-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 8px 8px 16px rgba(163, 163, 163, 0.3),
+                -8px -8px 16px rgba(255, 255, 255, 0.9);
+    background: linear-gradient(145deg, 
+                rgba(155, 126, 189, 0.05), 
+                rgba(184, 157, 219, 0.03));
+}
+
+/* 결과 카드 - 볼록한 효과 + 성공 컬러 */
 .result-success {
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(145deg, 
+                rgba(240, 248, 240, 0.9), 
+                rgba(230, 245, 230, 0.9));
     border-radius: 20px;
-    padding: 1rem;
+    padding: 1.2rem;
     font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
-    color: #fff;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-}
-.food-card {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    padding: 1.5rem;
+    color: #4A7C59;
+    box-shadow: 12px 12px 24px rgba(163, 163, 163, 0.3),
+                -12px -12px 24px rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(208, 224, 208, 0.5);
     margin: 1rem 0;
-    backdrop-filter: blur(15px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
+
+/* 음식 정보 카드 - 볼록한 효과 + 은은한 컬러 */
+.food-card {
+    background: linear-gradient(145deg, 
+                rgba(250, 250, 253, 0.95), 
+                rgba(245, 245, 248, 0.95));
+    border-radius: 25px;
+    padding: 2rem;
+    margin: 1rem 0;
+    box-shadow: 15px 15px 30px rgba(163, 163, 163, 0.25),
+                -15px -15px 30px rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
 .food-card h4 {
-    color: #fff;
-    margin-bottom: 1rem;
+    color: #9B7EBD !important;
+    margin-bottom: 1.5rem !important;
+    font-size: 1.15rem !important;
+    text-shadow: 1px 1px 2px rgba(155, 126, 189, 0.1);
 }
-.food-card p, .food-card strong {
-    color: #fff;
+
+.food-card p {
+    color: #2E2E2E !important;
+    font-size: 0.95rem !important;
+    line-height: 1.7 !important;
+    margin-bottom: 0.8rem !important;
+}
+
+.food-card strong {
+    color: #1A1A1A !important;
+    font-weight: 600 !important;
+}
+
+/* 스피너 스타일 개선 */
+.stSpinner {
+    color: #9B7EBD !important;
 }
 </style>
 """, unsafe_allow_html=True)
 
 # ---------------------------
-# 레이아웃 순서
+# 제목 & 안내
 # ---------------------------
+st.markdown('<div class="main-title">🍱 음식 이미지 분류기<br><small style="font-size: 0.7em; color: #999;">(ViT-B16 Demo)</small></div>', unsafe_allow_html=True)
 
-# 1) 제목
-st.markdown('<div class="main-title">🍱 음식 이미지 분류기<br><small style="font-size: 0.7em;">(ViT-B16 Demo)</small></div>', unsafe_allow_html=True)
-
-# 2) 경고 박스
 st.markdown("""
-<div class="glass-card warning-box">
-⚠️ <strong>데모 버전 안내</strong><br>
-이 앱은 인공지능을 활용한 음식 이미지 분류기입니다.<br>
-총 50가지 음식을 분류할 수 있으며,<br>
-칼로리 / 영양소 / 추천 페어링 / 음악 / 영화 정보를 제공합니다.
+<div class="warning-box">
+    <strong style="color: #8B4513;">⚠️ 데모 버전 안내</strong><br>
+    <span style="color: #555; font-size: 0.9rem;">이 앱은 인공지능을 활용한 음식 이미지 분류기입니다. 음식 사진을 업로드하면 ViT(Vision Transformer) 모델이 자동으로 음식의 종류를 식별하고, 해당 음식에 대한 상세 정보(칼로리, 영양소, 추천 페어링, 음악, 영화 등)를 카드 형태로 제공합니다. 휴대폰으로 찍은 음식 사진이나 인터넷에서 다운받은 이미지 모두 사용 가능하며, 총 50가지 다양한 음식을 정확하게 분류할 수 있습니다.</span>
 </div>
 """, unsafe_allow_html=True)
 
-# 3) 업로더
+# ---------------------------
+# 파일 업로드
+# ---------------------------
 st.markdown('<div class="upload-title">📸 이미지 업로드</div>', unsafe_allow_html=True)
-uploaded_file = st.file_uploader("", type=["jpg","png","jpeg"], label_visibility="collapsed")
+uploaded_file = st.file_uploader("", type=["jpg", "png", "jpeg"], label_visibility="collapsed")
 
-# 4) 음식 목록
-st.markdown('<div class="subtitle">🍣 분류 가능한 50가지 음식</div>', unsafe_allow_html=True)
+# ---------------------------
+# 50가지 음식 리스트 표시
+# ---------------------------
+st.markdown('<div class="subtitle">분류 가능한 50가지 음식</div>', unsafe_allow_html=True)
 
+# 음식 이모지 매핑
 food_emojis = {
     'baklava': '🥧', 'beef_tartare': '🥩', 'beignets': '🍩', 'bibimbap': '🍚', 'bread_pudding': '🍞',
     'breakfast_burrito': '🌯', 'bruschetta': '🍞', 'cannoli': '🧁', 'caprese_salad': '🥗', 'ceviche': '🍤',
@@ -200,8 +245,11 @@ food_emojis = {
     'sushi': '🍣', 'tacos': '🌮', 'takoyaki': '🐙', 'tiramisu': '🍰', 'waffles': '🧇'
 }
 
+# 음식 목록 생성
 food_list_html = '<div class="food-grid">'
-for food, emoji in food_emojis.items():
+foods = list(food_emojis.keys())
+for food in foods:
+    emoji = food_emojis.get(food, '🍽️')
     display_name = food.replace('_', ' ').title()
     food_list_html += f'<span class="food-item">{emoji} {display_name}</span>'
 food_list_html += '</div>'
@@ -247,11 +295,13 @@ transform = transforms.Compose([
 # ---------------------------
 if uploaded_file is not None:
     input_img = Image.open(uploaded_file).convert("RGB")
+
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         st.image(input_img, caption="📷 업로드된 이미지", use_container_width=True)
 
     x = transform(input_img).unsqueeze(0)
+
     with st.spinner('🔍 이미지 분석 중...'):
         with torch.no_grad():
             outputs = model(x).logits
