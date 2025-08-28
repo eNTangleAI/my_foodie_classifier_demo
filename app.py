@@ -17,113 +17,123 @@ st.set_page_config(
 )
 
 # ---------------------------
-# Glassmorphism 최소 안전 CSS
+# Neumorphism CSS
 # ---------------------------
 st.markdown("""
 <style>
-/* 전체 배경 (그라데이션) */
+/* 전체 배경 */
 .stApp {
-    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 40%, #fbc2eb 100%);
-    color: #fff;
+    background: #ECECEC;
+    color: #333;
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* Glass 카드 공통 */
-.glass-card {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    padding: 1.2rem;
+/* 공통 Neumorphism 카드 */
+.neu-card {
+    background: #ECECEC;
+    border-radius: 20px;
+    box-shadow: 8px 8px 16px #c5c5c5,
+                -8px -8px 16px #ffffff;
+    padding: 1.5rem;
     margin: 1rem 0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 /* 제목 */
 .main-title {
     font-size: 2.2rem;
-    color: #fff;
+    color: #4A4A4A;
     text-align: center;
     font-weight: bold;
     margin-bottom: 1.5rem;
-    text-shadow: 0 3px 6px rgba(0,0,0,0.2);
 }
 
 /* 경고 박스 */
 .warning-box {
+    background: #ECECEC;
+    border-radius: 20px;
+    box-shadow: inset 6px 6px 12px #c5c5c5,
+                inset -6px -6px 12px #ffffff;
+    padding: 1.5rem;
+    margin: 1rem 0;
     font-size: 1rem;
-    color: #fff;
+    color: #555;
 }
 
 /* 업로더 */
 .stFileUploader > div {
-    background: rgba(255,255,255,0.2) !important;
-    border-radius: 16px !important;
-    border: 1px dashed rgba(255,255,255,0.4) !important;
-    padding: 1.5rem !important;
+    background: #ECECEC !important;
+    border-radius: 20px !important;
+    padding: 2rem !important;
     margin: 1rem 0 2rem 0 !important;
     text-align: center !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+    box-shadow: inset 6px 6px 12px #c5c5c5,
+                inset -6px -6px 12px #ffffff !important;
 }
 
 /* 업로더 버튼 */
 .stFileUploader button {
-    background: rgba(255,255,255,0.25) !important;
-    color: #fff !important;
-    border: 1px solid rgba(255,255,255,0.4) !important;
-    border-radius: 20px !important;
-    padding: 0.6rem 1.2rem !important;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.15) !important;
-    transition: all 0.2s ease-in-out;
+    background: #ECECEC !important;
+    color: #333 !important;
+    border-radius: 12px !important;
+    padding: 0.6rem 1.5rem !important;
+    border: none !important;
+    font-weight: 500 !important;
+    box-shadow: 6px 6px 12px #c5c5c5,
+                -6px -6px 12px #ffffff !important;
 }
 .stFileUploader button:hover {
-    background: rgba(255,255,255,0.35) !important;
-    transform: translateY(-2px);
+    box-shadow: inset 6px 6px 12px #c5c5c5,
+                inset -6px -6px 12px #ffffff !important;
 }
 
 /* 음식 목록 */
 .food-grid {
-    background: rgba(255,255,255,0.15);
-    border-radius: 16px;
-    border: 1px solid rgba(255,255,255,0.25);
-    padding: 1.2rem;
+    background: #ECECEC;
+    border-radius: 20px;
+    box-shadow: inset 6px 6px 12px #c5c5c5,
+                inset -6px -6px 12px #ffffff;
+    padding: 1.5rem;
     margin: 1rem 0;
     text-align: center;
 }
 .food-item {
     display: inline-block;
-    margin: 5px;
+    margin: 6px;
     padding: 6px 12px;
     border-radius: 12px;
-    background: rgba(255,255,255,0.25);
-    border: 1px solid rgba(255,255,255,0.3);
+    background: #ECECEC;
+    box-shadow: inset 4px 4px 8px #c5c5c5,
+                inset -4px -4px 8px #ffffff;
     font-size: 0.9rem;
-    color: #fff;
+    color: #333;
 }
 
 /* 결과 카드 */
 .result-success {
-    background: rgba(255,255,255,0.15);
-    border-radius: 16px;
+    background: #ECECEC;
+    border-radius: 20px;
     padding: 1rem;
     font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
-    color: #fff;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    color: #333;
+    box-shadow: inset 6px 6px 12px #c5c5c5,
+                inset -6px -6px 12px #ffffff;
 }
 .food-card {
-    background: rgba(255,255,255,0.15);
-    border-radius: 16px;
-    padding: 1.2rem;
+    background: #ECECEC;
+    border-radius: 20px;
+    padding: 1.5rem;
     margin: 1rem 0;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    box-shadow: 6px 6px 12px #c5c5c5,
+                -6px -6px 12px #ffffff;
 }
 .food-card h4 {
-    color: #fff;
+    color: #4A4A4A;
     margin-bottom: 1rem;
 }
 .food-card p, .food-card strong {
-    color: #fff;
+    color: #333;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -137,7 +147,7 @@ st.markdown('<div class="main-title">🍱 음식 이미지 분류기<br><small s
 
 # 2) 경고 박스
 st.markdown("""
-<div class="glass-card warning-box">
+<div class="warning-box">
 ⚠️ <strong>데모 버전 안내</strong><br>
 이 앱은 인공지능을 활용한 음식 이미지 분류기입니다.<br>
 총 50가지 음식을 분류할 수 있으며,<br>
@@ -150,14 +160,15 @@ st.markdown('<div class="upload-title">📸 이미지 업로드</div>', unsafe_a
 uploaded_file = st.file_uploader("", type=["jpg","png","jpeg"], label_visibility="collapsed")
 
 # ---------------------------
-# 업로드된 이미지 + 추론 결과 (업로더 바로 밑)
-# ---------------------------
 # JSON 불러오기
+# ---------------------------
 with open("food_info.json", "r", encoding="utf-8") as f:
     food_info = json.load(f)
 classes = list(food_info.keys())
 
+# ---------------------------
 # 모델 불러오기
+# ---------------------------
 @st.cache_resource
 def load_model():
     repo_id = "eNtangedAI/my_foodie_classifier_demo"
@@ -197,7 +208,9 @@ food_emojis = {
     'sushi': '🍣', 'tacos': '🌮', 'takoyaki': '🐙', 'tiramisu': '🍰', 'waffles': '🧇'
 }
 
-# 추론 실행
+# ---------------------------
+# 업로드된 이미지 + 추론 결과 (업로더 바로 밑)
+# ---------------------------
 if uploaded_file is not None:
     input_img = Image.open(uploaded_file).convert("RGB")
     col1, col2, col3 = st.columns([1, 2, 1])
@@ -214,7 +227,6 @@ if uploaded_file is not None:
     result_emoji = food_emojis.get(result, '🍽️')
     display_result = result.replace('_', ' ').title()
 
-    # 업로더 바로 밑에 결과 표시
     st.markdown(f'<div class="result-success">{result_emoji} 예측 결과: {display_result}</div>', unsafe_allow_html=True)
 
     info = food_info.get(result, None)
