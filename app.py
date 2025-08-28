@@ -102,16 +102,54 @@ st.markdown("""
         margin: 1rem 0;
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
-    /* 파일 업로더 스타일링 */
+    
+    /* 음식 정보 카드 텍스트 스타일 개선 - 진한 회색으로 변경 */
+    .food-card p {
+        color: #2E2E2E !important;
+        font-size: 0.95rem !important;
+        line-height: 1.6 !important;
+        margin-bottom: 0.8rem !important;
+    }
+    .food-card strong {
+        color: #1A1A1A !important;
+        font-weight: 600 !important;
+    }
+    .food-card h4 {
+        color: #8A7CA8 !important;
+        margin-bottom: 1rem !important;
+        font-size: 1.1rem !important;
+    }
+    
+    /* 파일 업로더 기본 스타일링 */
     .stFileUploader > div {
         background: #FFFFFF;
-        border: 1px solid #E0E0E0;
+        border: 2px dashed #D0D0D0;
         border-radius: 15px;
         padding: 2rem;
         margin: 1rem 0 2rem 0;
         box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
     }
+    
+    /* 드래그 오버 상태 스타일링 */
+    .stFileUploader > div:hover,
+    .stFileUploader > div[data-drag-over="true"] {
+        background: rgba(155, 126, 189, 0.1) !important;
+        border-color: #9B7EBD !important;
+        border-style: dashed !important;
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(155, 126, 189, 0.2) !important;
+    }
+    
+    /* 드래그 오버 시 텍스트 반투명 효과 */
+    .stFileUploader > div:hover::before,
+    .stFileUploader > div[data-drag-over="true"]::before {
+        opacity: 0.7 !important;
+        color: #9B7EBD !important;
+    }
+    
     .stFileUploader > div > div {
         border: none !important;
         background: transparent !important;
@@ -123,6 +161,7 @@ st.markdown("""
     .stFileUploader label {
         display: none !important;
     }
+    
     /* Browse files 버튼 스타일링 */
     .stFileUploader button {
         background: #FFFFFF !important;
@@ -140,7 +179,8 @@ st.markdown("""
         border: 1px solid #C0C0C0 !important;
         box-shadow: 0 3px 6px rgba(0,0,0,0.15) !important;
     }
-    /* 드래그 앤 드롭 텍스트 */
+    
+    /* 드래그 앤 드롭 안내 텍스트 */
     .stFileUploader > div::before {
         content: "🍽️ 음식 이미지를 업로드하거나 드래그해주세요! 🤗";
         display: block;
@@ -148,8 +188,59 @@ st.markdown("""
         color: #666;
         font-size: 1rem;
         font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    /* 드래그 상태 감지를 위한 JavaScript */
+    .drag-drop-area {
+        position: relative;
+    }
+    
+    /* 추가적인 드래그 오버 효과 */
+    .stFileUploader > div.drag-over {
+        background: rgba(155, 126, 189, 0.15) !important;
+        border-color: #9B7EBD !important;
+        transform: scale(1.02) !important;
+    }
+    
+    .stFileUploader > div.drag-over::before {
+        content: "✨ 이제 파일을 놓아주세요! ✨" !important;
+        color: #9B7EBD !important;
+        opacity: 0.8 !important;
+        font-weight: 600 !important;
     }
 </style>
+
+<script>
+// 드래그 앤 드롭 이벤트 리스너
+document.addEventListener('DOMContentLoaded', function() {
+    const fileUploader = document.querySelector('.stFileUploader > div');
+    
+    if (fileUploader) {
+        fileUploader.addEventListener('dragenter', function(e) {
+            e.preventDefault();
+            this.classList.add('drag-over');
+        });
+        
+        fileUploader.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.classList.add('drag-over');
+        });
+        
+        fileUploader.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            if (!fileUploader.contains(e.relatedTarget)) {
+                this.classList.remove('drag-over');
+            }
+        });
+        
+        fileUploader.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+        });
+    }
+});
+</script>
 """, unsafe_allow_html=True)
 
 # ---------------------------
