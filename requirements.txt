@@ -1,9 +1,10 @@
 streamlit==1.45.1
 torch>=2.2.0
 torchvision>=0.17.0
-transformers>=4.55.0
+transformers>=4.37.2
 huggingface_hub>=0.23.0
 Pillow>=10.0.0
+
 
 
 
